@@ -52,8 +52,10 @@ export interface UserAuthOperations {
 export interface User {
   id: string;
   role: 'admin' | 'student' | 'mentor';
+  image?: (string | null) | Media;
   name?: string | null;
   phone?: string | null;
+  profession?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;

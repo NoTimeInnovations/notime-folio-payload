@@ -35,12 +35,20 @@ export const Users: CollectionConfig = {
       required: true,
     },
     {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+      admin: {
+        condition: (data) => data.role === 'student',
+      },
+    },
+    {
       name: 'name',
       label: 'Name',
       type: 'text',
       required: true,
       admin: {
-        condition: (data: { role?: string }) => data.role === 'student' || data.role === 'mentor',
+        condition: (data) => data.role === 'student' || data.role === 'mentor',
       },
     },
     {
@@ -49,7 +57,16 @@ export const Users: CollectionConfig = {
       type: 'text',
       required: true,
       admin: {
-        condition: (data: { role?: string }) => data.role === 'student' || data.role === 'mentor',
+        condition: (data) => data.role === 'student' || data.role === 'mentor',
+      },
+    },
+    {
+      name: 'profession',
+      label: 'Profession',
+      type: 'text',
+      required: true,
+      admin: {
+        condition: (data) => data.role === 'student',
       },
     },
   ],
