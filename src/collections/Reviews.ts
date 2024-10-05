@@ -56,7 +56,7 @@ const Reviews:CollectionConfig = {
       {
           path: '/reviews/:id',
           method: 'post',
-          handler: async (req, res) => {
+          handler: async (req , res) => {
             const { id } = req.params;
             const { user, body } = req;
             

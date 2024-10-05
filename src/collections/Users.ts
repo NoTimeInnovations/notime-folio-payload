@@ -1,6 +1,6 @@
-import { isAdmin, isAdminFieldLevel } from '../access/isAdmin';
-import { isAdminOrSelf } from '../access/isAdminOrSelf';
-import { CollectionConfig } from 'payload';
+import { isAdmin, isAdminFieldLevel } from '../access/isAdmin'
+import { isAdminOrSelf } from '../access/isAdminOrSelf'
+import { CollectionConfig } from 'payload'
 
 const Users: CollectionConfig = {
   slug: 'users',
@@ -45,7 +45,7 @@ const Users: CollectionConfig = {
       type: 'number',
       required: false,
       admin: {
-        condition: ({ type } : { type : string }) => type === 'student',
+        condition: ({ type }) => type === 'student',
       },
     },
     {
@@ -53,7 +53,7 @@ const Users: CollectionConfig = {
       type: 'number',
       required: false,
       admin: {
-        condition: ({ type } : { type : string }) => type === 'student',
+        condition: ({ type }) => type === 'student',
       },
     },
     {
@@ -61,7 +61,7 @@ const Users: CollectionConfig = {
       type: 'number',
       required: false,
       admin: {
-        condition: ({ type } : { type : string }) => type === 'student',
+        condition: ({ type }) => type === 'student',
       },
     },
     {
@@ -75,7 +75,7 @@ const Users: CollectionConfig = {
       ],
       required: false,
       admin: {
-        condition: ({ type } : { type : string }) => type === 'student',
+        condition: ({ type }) => type === 'student',
       },
     },
     {
@@ -100,7 +100,7 @@ const Users: CollectionConfig = {
       ],
       required: false,
       admin: {
-        condition: ({ type } : { type : string }) => type === 'student',
+        condition: ({ type }) => type === 'student',
       },
     },
     {
@@ -109,7 +109,7 @@ const Users: CollectionConfig = {
       relationTo: 'courses',
       hasMany: true,
       admin: {
-        condition: ({ type } : { type : string }) => type === 'student',
+        condition: ({ type }) => type === 'student',
       },
     },
     {
@@ -117,43 +117,43 @@ const Users: CollectionConfig = {
       type: 'text',
       required: false,
       admin: {
-        condition: ({ type } : { type : string }) => type === 'student',
-      }
+        condition: ({ type }) => type === 'student',
+      },
     },
     {
       name: 'linkedin',
       type: 'text',
       required: false,
       admin: {
-        condition: ({ type } : { type : string }) => type === 'student',
-      }
+        condition: ({ type }) => type === 'student',
+      },
     },
     {
       name: 'image_url',
       type: 'text',
       required: false,
       admin: {
-        condition: ({ type } : { type : string }) => type === 'student',
+        condition: ({ type }) => type === 'student',
         description: 'URL of the user profile image',
       },
     },
   ],
   access: {
-    create: async ({ req }) => {
-      console.log("Incoming create request body:", req.body); // Log the request body
-      console.log("Authenticated user:", req.user); // Log the authenticated user
+    create: async ({ req }: { req: any }) => {
+      console.log('Incoming create request body:', req.body)
+      console.log('Authenticated user:', req.user)
       if (req.user && req.user.type === 'admin') {
-        return true; // Allow admin to create users of any type
+        return true
       }
       if (req.body && req.body.type) {
-        req.body.type = 'student'; // Enforce student type for non-admin users
+        req.body.type = 'student'
       }
-      return true;
+      return true
     },
     read: isAdminOrSelf,
     update: isAdminOrSelf,
     delete: isAdmin,
   },
-};
+}
 
-export default Users;
+export default Users
