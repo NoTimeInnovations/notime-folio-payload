@@ -19,6 +19,7 @@
     "@payloadcms/next": "beta",
     "@payloadcms/plugin-cloud": "beta",
     "@payloadcms/richtext-lexical": "beta",
+    "@payloadcms/storage-vercel-blob": "3.0.0-beta.109",
     "autoprefixer": "^10.4.20",
     "cross-env": "^7.0.3",
     "graphql": "^16.8.1",
