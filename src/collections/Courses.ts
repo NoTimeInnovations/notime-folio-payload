@@ -1,5 +1,5 @@
 import { isAdmin } from '../access/isAdmin';
-import { CollectionConfig } from 'payload/types';
+import { CollectionConfig } from 'payload';
 const Courses:CollectionConfig = {
   slug: 'courses',
   access:{

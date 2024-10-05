@@ -1,4 +1,5 @@
-import { Access, FieldAccess } from "payload/types";
+import { Access, FieldAccess } from "payload";
+
 
 export const isAdmin: Access= ({ req: { user } }) => {
   console.log("admin");

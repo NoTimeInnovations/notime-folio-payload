@@ -3,7 +3,7 @@ import payload from 'payload';
 import { isAdmin, isAdminFieldLevel } from '../access/isAdmin';
 import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf';
 import { isAdminOrStudent } from '../access/isCombination';
-import { CollectionConfig } from 'payload/types';
+import { CollectionConfig } from 'payload';
 
 
 const Reviews:CollectionConfig = {
@@ -16,7 +16,7 @@ const Reviews:CollectionConfig = {
           return true
         }
         const review = await payload.findByID({ collection: 'reviews', id });
-        return req.user.type === 'admin' || review.user_id === req.user.id;
+        return req?.user?.type === 'admin' || review.user_id === req?.user?.id;
       },
       create:isAdminOrStudent
     }, 
@@ -24,7 +24,7 @@ const Reviews:CollectionConfig = {
       {
         name: 'user_name',
         type: 'text',
-        defaultValue: ({ user }) => `${user.name}`,
+        defaultValue: ({ user } : { user : any }) => `${user.name}`,
         access:{
           create:isAdminFieldLevel,          // admin can create/update but when the student create it will have its id
           update:isAdminFieldLevel,
@@ -34,7 +34,7 @@ const Reviews:CollectionConfig = {
       {
         name: 'user_id',
         type: 'relationship',
-        defaultValue: ({ user }) => `${user.id}`,
+        defaultValue:  ({ user } : { user : any }) => `${user.id}`,
         relationTo: 'users',
         access:{
           create:isAdminFieldLevel,

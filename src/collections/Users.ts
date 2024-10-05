@@ -1,6 +1,6 @@
 import { isAdmin, isAdminFieldLevel } from '../access/isAdmin';
 import { isAdminOrSelf } from '../access/isAdminOrSelf';
-import { CollectionConfig } from 'payload/types';
+import { CollectionConfig } from 'payload';
 
 const Users: CollectionConfig = {
   slug: 'users',
@@ -45,7 +45,7 @@ const Users: CollectionConfig = {
       type: 'number',
       required: false,
       admin: {
-        condition: ({ type }) => type === 'student',
+        condition: ({ type } : { type : string }) => type === 'student',
       },
     },
     {
@@ -53,7 +53,7 @@ const Users: CollectionConfig = {
       type: 'number',
       required: false,
       admin: {
-        condition: ({ type }) => type === 'student',
+        condition: ({ type } : { type : string }) => type === 'student',
       },
     },
     {
@@ -61,7 +61,7 @@ const Users: CollectionConfig = {
       type: 'number',
       required: false,
       admin: {
-        condition: ({ type }) => type === 'student',
+        condition: ({ type } : { type : string }) => type === 'student',
       },
     },
     {
@@ -75,7 +75,7 @@ const Users: CollectionConfig = {
       ],
       required: false,
       admin: {
-        condition: ({ type }) => type === 'student',
+        condition: ({ type } : { type : string }) => type === 'student',
       },
     },
     {
@@ -100,7 +100,7 @@ const Users: CollectionConfig = {
       ],
       required: false,
       admin: {
-        condition: ({ type }) => type === 'student',
+        condition: ({ type } : { type : string }) => type === 'student',
       },
     },
     {
@@ -109,7 +109,7 @@ const Users: CollectionConfig = {
       relationTo: 'courses',
       hasMany: true,
       admin: {
-        condition: ({ type }) => type === 'student',
+        condition: ({ type } : { type : string }) => type === 'student',
       },
     },
     {
@@ -117,7 +117,7 @@ const Users: CollectionConfig = {
       type: 'text',
       required: false,
       admin: {
-        condition: ({ type }) => type === 'student',
+        condition: ({ type } : { type : string }) => type === 'student',
       }
     },
     {
@@ -125,7 +125,7 @@ const Users: CollectionConfig = {
       type: 'text',
       required: false,
       admin: {
-        condition: ({ type }) => type === 'student',
+        condition: ({ type } : { type : string }) => type === 'student',
       }
     },
     {
@@ -133,7 +133,7 @@ const Users: CollectionConfig = {
       type: 'text',
       required: false,
       admin: {
-        condition: ({ type }) => type === 'student',
+        condition: ({ type } : { type : string }) => type === 'student',
         description: 'URL of the user profile image',
       },
     },

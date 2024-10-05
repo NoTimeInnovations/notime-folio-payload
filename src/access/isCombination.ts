@@ -1,4 +1,5 @@
-import { Access, FieldAccess } from "payload/types";
+import { Access, FieldAccess } from "payload";
+
 
 export const isAdminOrMentor: Access= ({ req: { user } }) => {
   return Boolean(user?.type?.includes('admin'))||Boolean(user?.type?.includes('Mentor'));

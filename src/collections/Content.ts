@@ -1,5 +1,5 @@
 import { isAdminOrMentor } from '../access/isCombination';
-import { CollectionConfig } from 'payload/types';
+import { CollectionConfig } from 'payload';
 const Content:CollectionConfig = {
     slug: 'contents',
     access:{

@@ -1,5 +1,5 @@
 import { isAdminOrSelf } from '../access/isAdminOrSelf';
-import { CollectionConfig } from 'payload/types';
+import { CollectionConfig } from 'payload';
 const McqSubmission:CollectionConfig = {
   slug: 'mcq-submissions',
   access:{
@@ -9,7 +9,7 @@ const McqSubmission:CollectionConfig = {
   fields: [
     {
       name: 'student_id',
-      defaultValue: ({ user }) => `${user.id}`,
+      defaultValue: ({ user } : { user : any }) => `${user.id}`,
       type: 'relationship',
       relationTo: 'users',
       required: true,

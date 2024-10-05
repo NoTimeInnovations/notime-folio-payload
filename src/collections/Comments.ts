@@ -1,7 +1,7 @@
 import payload from 'payload';
 import { isAdminFieldLevel } from '../access/isAdmin';
 import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf';
-import { CollectionConfig } from 'payload/types';
+import { CollectionConfig } from 'payload';
 const Comments:CollectionConfig = {
     slug: 'comments',
     access:{
@@ -10,22 +10,22 @@ const Comments:CollectionConfig = {
         if (!id) {
           return true
         }
-        const comment = await payload.findByID({ collection: 'comment', id });
-        return req.user.type === 'admin' || comment.user_id === req.user.id;
+        const comment = await payload.findByID({ collection: 'comments', id });
+        return req?.user?.type === 'admin' || comment.user_id === req?.user?.id;
       },
       delete: async ({ req, id }) => {
         if (!id) {
           return true
         }
-        const comment = await payload.findByID({ collection: 'comment', id });
-        return req.user.type === 'admin' || comment.user_id === req.user.id;
+        const comment = await payload.findByID({ collection: 'comments', id });
+        return req?.user?.type === 'admin' || comment.user_id === req?.user?.id;
       }
     },
     fields: [
       {
         name: 'user_id',
         type: 'relationship',
-        defaultValue:({ user }) => `${user.id}`,
+        defaultValue:({ user } : { user : any }) => `${user.id}`,
         access:{
           create:isAdminFieldLevel,
           update:isAdminFieldLevel,
@@ -36,7 +36,7 @@ const Comments:CollectionConfig = {
       {
         name: 'user_name',
         type: 'text',
-        defaultValue:({ user }) => `${user.name}`,
+        defaultValue:({ user } : { user : any }) => `${user.name}`,
         access:{
           create:isAdminFieldLevel,
           update:isAdminFieldLevel,
@@ -53,7 +53,7 @@ const Comments:CollectionConfig = {
       {
           path: '/comments/:id',
           method: 'post',
-          handler: async (req, res) => {
+          handler: async (req : any, res : any) => {
             const { id } = req.params;
             const { user, body } = req;
             try {

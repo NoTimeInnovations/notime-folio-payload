@@ -1,7 +1,7 @@
 import {isAdminFieldLevel } from '../access/isAdmin';
 import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf';
 import { isAdminOrMentorFieldLevel } from '../access/isCombination';
-import { CollectionConfig } from 'payload/types';
+import { CollectionConfig } from 'payload';
 const ProblemSubmission:CollectionConfig = {
   slug: 'problem-submissions',
   admin: {
@@ -15,7 +15,7 @@ const ProblemSubmission:CollectionConfig = {
     {
       name: 'user_id',
       type: 'relationship',
-      defaultValue: ({ user }) => `${user.id}`,
+      defaultValue: ({ user } : { user : any }) => `${user.id}`,
       access:{
         create:isAdminFieldLevel,
         update:isAdminFieldLevel,
