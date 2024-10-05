@@ -14,6 +14,14 @@ export interface Config {
     users: User;
     media: Media;
     events: Event;
+    'mcq-submissions': McqSubmission;
+    'problem-submissions': ProblemSubmission;
+    courses: Course;
+    tasks: Task;
+    comments: Comment;
+    contents: Content;
+    reviews: Review;
+    badges: Badge;
     'payload-locked-documents': PayloadLockedDocument;
     'payload-preferences': PayloadPreference;
     'payload-migrations': PayloadMigration;
@@ -51,11 +59,29 @@ export interface UserAuthOperations {
  */
 export interface User {
   id: string;
-  role: 'admin' | 'student' | 'mentor';
-  image?: (string | null) | Media;
-  name?: string | null;
-  phone?: string | null;
-  profession?: string | null;
+  name: string;
+  type: 'student' | 'mentor' | 'admin';
+  stars?: number | null;
+  points?: number | null;
+  level?: number | null;
+  badges?:
+    | {
+        badge_id?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  projects?:
+    | {
+        github?: string | null;
+        live_link?: string | null;
+        title: string;
+        id?: string | null;
+      }[]
+    | null;
+  courses?: (string | Course)[] | null;
+  github?: string | null;
+  linkedin?: string | null;
+  image_url?: string | null;
   updatedAt: string;
   createdAt: string;
   email: string;
@@ -66,6 +92,119 @@ export interface User {
   loginAttempts?: number | null;
   lockUntil?: string | null;
   password?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "courses".
+ */
+export interface Course {
+  id: string;
+  title: string;
+  amount: number;
+  discount?: number | null;
+  pre_requirements?:
+    | {
+        requirement?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  learnings?:
+    | {
+        learning?: string | null;
+        id?: string | null;
+      }[]
+    | null;
+  contents?: (string | Content)[] | null;
+  reviews?: (string | Review)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "contents".
+ */
+export interface Content {
+  id: string;
+  topic: string;
+  video?: string | null;
+  total_points: number;
+  short_note?: string | null;
+  comments?: (string | Comment)[] | null;
+  tasks?: (string | Task)[] | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "comments".
+ */
+export interface Comment {
+  id: string;
+  user_id: string | User;
+  user_name: string;
+  content: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "tasks".
+ */
+export interface Task {
+  id: string;
+  title?: string | null;
+  Problems?:
+    | {
+        question: {
+          root: {
+            type: string;
+            children: {
+              type: string;
+              version: number;
+              [k: string]: unknown;
+            }[];
+            direction: ('ltr' | 'rtl') | null;
+            format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
+            indent: number;
+            version: number;
+          };
+          [k: string]: unknown;
+        };
+        image_url?: string | null;
+        point?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  MCQs?:
+    | {
+        question?: string | null;
+        options?:
+          | {
+              option?: string | null;
+              id?: string | null;
+            }[]
+          | null;
+        answer?: string | null;
+        image_url?: string | null;
+        point?: number | null;
+        id?: string | null;
+      }[]
+    | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "reviews".
+ */
+export interface Review {
+  id: string;
+  user_name: string;
+  user_id: string | User;
+  description?: string | null;
+  rating: number;
+  updatedAt: string;
+  createdAt: string;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
@@ -104,6 +243,47 @@ export interface Event {
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "mcq-submissions".
+ */
+export interface McqSubmission {
+  id: string;
+  student_id: string | User;
+  task_id: string | Task;
+  option_selected?: string | null;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "problem-submissions".
+ */
+export interface ProblemSubmission {
+  id: string;
+  user_id: string | User;
+  problem_id: string;
+  problem_name: string;
+  task_id: string | Task;
+  github_link: string;
+  live_link?: string | null;
+  description?: string | null;
+  status: 'submitted' | 'rejected' | 'approved';
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "badges".
+ */
+export interface Badge {
+  id: string;
+  name: string;
+  image_url: string;
+  decription: string;
+  updatedAt: string;
+  createdAt: string;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
  * via the `definition` "payload-locked-documents".
  */
 export interface PayloadLockedDocument {
@@ -120,6 +300,38 @@ export interface PayloadLockedDocument {
     | ({
         relationTo: 'events';
         value: string | Event;
+      } | null)
+    | ({
+        relationTo: 'mcq-submissions';
+        value: string | McqSubmission;
+      } | null)
+    | ({
+        relationTo: 'problem-submissions';
+        value: string | ProblemSubmission;
+      } | null)
+    | ({
+        relationTo: 'courses';
+        value: string | Course;
+      } | null)
+    | ({
+        relationTo: 'tasks';
+        value: string | Task;
+      } | null)
+    | ({
+        relationTo: 'comments';
+        value: string | Comment;
+      } | null)
+    | ({
+        relationTo: 'contents';
+        value: string | Content;
+      } | null)
+    | ({
+        relationTo: 'reviews';
+        value: string | Review;
+      } | null)
+    | ({
+        relationTo: 'badges';
+        value: string | Badge;
       } | null);
   globalSlug?: string | null;
   user: {

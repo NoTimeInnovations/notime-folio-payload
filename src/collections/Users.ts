@@ -1,27 +1,30 @@
-import { AccessArgs, CollectionConfig } from 'payload'
+import { isAdmin, isAdminFieldLevel } from '../access/isAdmin';
+import { isAdminOrSelf } from '../access/isAdminOrSelf';
+import { CollectionConfig } from 'payload/types';
 
-export const Users: CollectionConfig = {
+const Users: CollectionConfig = {
   slug: 'users',
-  admin: {
-    useAsTitle: 'email',
-  },
   auth: true,
-  access: {
-    create: () => true,
-    read: ({ req }: AccessArgs) => req.user?.role === 'admin',
-    update: ({ req }: AccessArgs) => req.user?.role === 'admin',
-    delete: ({ req }: AccessArgs) => req.user?.role === 'admin',
-  },
   fields: [
     {
-      name: 'role',
-      label: 'Role',
-      type: 'radio',
+      name: 'name',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'email',
+      type: 'email',
+      required: true,
+      unique: true,
+    },
+    {
+      name: 'type',
+      type: 'select',
+      required: true,
+      access: {
+        update: isAdminFieldLevel,
+      },
       options: [
-        {
-          label: 'Admin',
-          value: 'admin',
-        },
         {
           label: 'Student',
           value: 'student',
@@ -30,44 +33,127 @@ export const Users: CollectionConfig = {
           label: 'Mentor',
           value: 'mentor',
         },
+        {
+          label: 'Admin',
+          value: 'admin',
+        },
       ],
-      defaultValue: 'admin',
-      required: true,
+      defaultValue: 'student',
     },
     {
-      name: 'image',
-      type: 'upload',
-      relationTo: 'media',
+      name: 'stars',
+      type: 'number',
+      required: false,
       admin: {
-        condition: (data) => data.role === 'student',
+        condition: ({ type }) => type === 'student',
       },
     },
     {
-      name: 'name',
-      label: 'Name',
-      type: 'text',
-      required: true,
+      name: 'points',
+      type: 'number',
+      required: false,
       admin: {
-        condition: (data) => data.role === 'student' || data.role === 'mentor',
+        condition: ({ type }) => type === 'student',
       },
     },
     {
-      name: 'phone',
-      label: 'Phone',
-      type: 'text',
-      required: true,
+      name: 'level',
+      type: 'number',
+      required: false,
       admin: {
-        condition: (data) => data.role === 'student' || data.role === 'mentor',
+        condition: ({ type }) => type === 'student',
       },
     },
     {
-      name: 'profession',
-      label: 'Profession',
-      type: 'text',
-      required: true,
+      name: 'badges',
+      type: 'array',
+      fields: [
+        {
+          name: 'badge_id',
+          type: 'text',
+        },
+      ],
+      required: false,
       admin: {
-        condition: (data) => data.role === 'student',
+        condition: ({ type }) => type === 'student',
+      },
+    },
+    {
+      name: 'projects',
+      type: 'array',
+      fields: [
+        {
+          name: 'github',
+          type: 'text',
+          required: false,
+        },
+        {
+          name: 'live_link',
+          type: 'text',
+          required: false,
+        },
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
+        },
+      ],
+      required: false,
+      admin: {
+        condition: ({ type }) => type === 'student',
+      },
+    },
+    {
+      name: 'courses',
+      type: 'relationship',
+      relationTo: 'courses',
+      hasMany: true,
+      admin: {
+        condition: ({ type }) => type === 'student',
+      },
+    },
+    {
+      name: 'github',
+      type: 'text',
+      required: false,
+      admin: {
+        condition: ({ type }) => type === 'student',
+      }
+    },
+    {
+      name: 'linkedin',
+      type: 'text',
+      required: false,
+      admin: {
+        condition: ({ type }) => type === 'student',
+      }
+    },
+    {
+      name: 'image_url',
+      type: 'text',
+      required: false,
+      admin: {
+        condition: ({ type }) => type === 'student',
+        description: 'URL of the user profile image',
       },
     },
   ],
-}
+  access: {
+    create: async ({ req }) => {
+      console.log("Incoming create request body:", req.body); // Log the request body
+      console.log("Authenticated user:", req.user); // Log the authenticated user
+      if (req.user && req.user.type === 'admin') {
+        return true; // Allow admin to create users of any type
+      }
+      if (req.body && req.body.type) {
+        req.body.type = 'student'; // Enforce student type for non-admin users
+      }
+      return true;
+    },
+    read: isAdminOrSelf,
+    update: isAdminOrSelf,
+    delete: isAdmin,
+  },
+};
+
+export default Users;
