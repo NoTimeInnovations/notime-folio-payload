@@ -6,7 +6,7 @@ import { isAdminOrStudent } from '../access/isCombination';
 import { CollectionConfig } from 'payload';
 
 
-const Reviews:CollectionConfig = {
+const Reviews = {
     slug: 'reviews',
     access:{
       update:isAdmin,
@@ -24,7 +24,7 @@ const Reviews:CollectionConfig = {
       {
         name: 'user_name',
         type: 'text',
-        defaultValue: ({ user } : { user : any }) => `${user.name}`,
+        defaultValue: ({ user }) => `${user.name}`,
         access:{
           create:isAdminFieldLevel,          // admin can create/update but when the student create it will have its id
           update:isAdminFieldLevel,
@@ -34,7 +34,7 @@ const Reviews:CollectionConfig = {
       {
         name: 'user_id',
         type: 'relationship',
-        defaultValue:  ({ user } : { user : any }) => `${user.id}`,
+        defaultValue:  ({ user }) => `${user.id}`,
         relationTo: 'users',
         access:{
           create:isAdminFieldLevel,
@@ -80,7 +80,7 @@ const Reviews:CollectionConfig = {
                 collection: 'contents',
                 id,
                 data: {
-                  reviews: [ ...(content.reviews as string[] || []), newComment.id],
+                  reviews: [ ...(content.reviews || []), newComment.id],
                 },
               });
               return res.status(200).json({ review: updatedContent });

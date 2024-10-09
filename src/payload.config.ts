@@ -3,7 +3,7 @@ import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
 import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
-import { buildConfig } from 'payload'
+import { buildConfig, CollectionConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 
@@ -30,7 +30,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Events, McqSubmission,ProblemSubmission,Courses,Tasks,Comments,Content,Reviews,Badges],
+  collections: [Users, Media, Events, McqSubmission,ProblemSubmission,Courses,Tasks,Comments as CollectionConfig,Content,Reviews as CollectionConfig,Badges],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {

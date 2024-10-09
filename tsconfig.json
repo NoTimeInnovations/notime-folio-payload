@@ -37,7 +37,7 @@
     "**/*.ts",
     "**/*.tsx",
     ".next/types/**/*.ts"
-  ],
+, "src/collections/Comments.js", "src/collections/Reviews.js"  ],
   "exclude": [
     "node_modules"
   ]
