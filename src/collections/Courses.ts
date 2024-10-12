@@ -56,9 +56,9 @@ const Courses:CollectionConfig = {
       ],
     },
     {
-      name: 'contents',
+      name: 'Roadmap',
       type: 'relationship',
-      relationTo: 'contents',
+      relationTo: 'roadmaps',
       hasMany: true,
     },
     {

@@ -15,10 +15,11 @@ import ProblemSubmission from './collections/ProblemSubmissions'
 import Courses from './collections/Courses'
 import Tasks from './collections/Tasks'
 import Comments from './collections/Comments'
-import Content from './collections/Content'
 import Reviews from './collections/Reviews'
 import Badges from './collections/badges'
 import Users from './collections/Users'
+import Topic from './collections/Topic'
+import Roadmap from './collections/Roadmap'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -30,7 +31,7 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Events, McqSubmission,ProblemSubmission,Courses,Tasks,Comments as CollectionConfig,Content,Reviews as CollectionConfig,Badges],
+  collections: [Users, Media, Events, McqSubmission,ProblemSubmission,Courses,Tasks,Comments as CollectionConfig,Roadmap,Reviews as CollectionConfig,Badges , Topic],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
