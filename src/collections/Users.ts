@@ -7,6 +7,11 @@ const Users: CollectionConfig = {
   auth: true,
   fields: [
     {
+      name: 'image',
+      type: 'upload',
+      relationTo: 'media',
+    },
+    {
       name: 'name',
       type: 'text',
       required: true,
@@ -126,15 +131,6 @@ const Users: CollectionConfig = {
       required: false,
       admin: {
         condition: ({ type }) => type === 'student',
-      },
-    },
-    {
-      name: 'image_url',
-      type: 'text',
-      required: false,
-      admin: {
-        condition: ({ type }) => type === 'student',
-        description: 'URL of the user profile image',
       },
     },
   ],
