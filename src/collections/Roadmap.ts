@@ -3,6 +3,7 @@ import { CollectionConfig } from 'payload';
 const Roadmap:CollectionConfig = {
     slug: 'roadmaps',
     access:{
+      read : ()=>true,
       create:isAdminOrMentor,
       delete:isAdminOrMentor,
       update:isAdminOrMentor

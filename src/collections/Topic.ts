@@ -1,6 +1,13 @@
+import { isAdminOrMentor } from '@/access/isCombination'
 import { CollectionConfig } from 'payload'
 
 const Topic: CollectionConfig = {
+  access: {
+    read: () => true,
+    create: isAdminOrMentor,
+    delete: isAdminOrMentor,
+    update: isAdminOrMentor,
+  },
   slug: 'topics',
   fields: [
     {
@@ -39,4 +46,4 @@ const Topic: CollectionConfig = {
   },
 }
 
-export default Topic;
+export default Topic
