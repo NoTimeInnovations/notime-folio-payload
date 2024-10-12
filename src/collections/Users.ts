@@ -1,5 +1,5 @@
 import { isAdmin, isAdminFieldLevel } from '../access/isAdmin'
-import { isAdminOrSelf } from '../access/isAdminOrSelf'
+import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf'
 import { CollectionConfig } from 'payload'
 
 const Users: CollectionConfig = {
@@ -21,6 +21,9 @@ const Users: CollectionConfig = {
       type: 'email',
       required: true,
       unique: true,
+      access: {
+        read: isAdminOrSelfFieldAccess,
+      },
     },
     {
       name: 'type',
@@ -146,7 +149,7 @@ const Users: CollectionConfig = {
       }
       return true
     },
-    read: isAdminOrSelf,
+    read: () => true,
     update: isAdminOrSelf,
     delete: isAdmin,
   },
