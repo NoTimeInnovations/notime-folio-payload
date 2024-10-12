@@ -3,13 +3,25 @@ import { CollectionConfig } from 'payload';
 const Courses:CollectionConfig = {
   slug: 'courses',
   access:{
+    read : ()=>true,
     create:isAdmin,
     update:isAdmin,
     delete:isAdmin
   },
   fields: [
     {
+      name : 'image',
+      type : 'upload',
+      required : true,
+      relationTo : 'media'
+    },
+    {
       name: 'title',
+      type: 'text',
+      required: true,
+    },
+    {
+      name: 'shortDesc',
       type: 'text',
       required: true,
     },
