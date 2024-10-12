@@ -9,9 +9,18 @@ const Content:CollectionConfig = {
     },
     fields: [
       {
+        name: 'day',
+        type: 'number',
+        required: true,
+      },
+      {
         name: 'topic',
         type: 'text',
         required: true,
+      },
+      {
+        name: 'shortDesc',
+        type: 'textarea',
       },
       {
         name: 'video',
@@ -21,10 +30,6 @@ const Content:CollectionConfig = {
         name: 'total_points',
         type: 'number',
         required: true,
-      },
-      {
-        name: 'short_note',
-        type: 'textarea',
       },
       {
         name: 'comments',
