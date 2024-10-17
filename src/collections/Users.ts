@@ -2,15 +2,40 @@ import { isAdmin, isAdminFieldLevel } from '../access/isAdmin';
 import { isAdminOrSelf } from '../access/isAdminOrSelf';
 import payload from 'payload';
 import { CollectionConfig } from 'payload/types';
+import { v2 as cloudinary } from 'cloudinary';
+import path from 'path';
+import fs from 'fs';
+
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
+
 
 const Users: CollectionConfig = {
   slug: 'users',
   auth: true,
+  access: {
+    create: async ({ req }) => {
+      if (req.user && req.user.type === 'admin') {
+        return true;
+      }
+      if (req.body && req.body.type) {
+        req.body.type = 'student';
+      }
+      return true;
+    },
+    update: isAdminOrSelf,
+    delete: isAdmin,
+  },
   fields: [
     {
       name: 'name',
       type: 'text',
       required: true,
+      minLength:4,
+      maxLength:36
     },
     {
       name: 'email',
@@ -44,7 +69,10 @@ const Users: CollectionConfig = {
     {
       name: 'stars',
       type: 'number',
+      defaultValue:0,
       required: false,
+      min:0,
+      max:5,
       admin: {
         condition: ({ type }) => type === 'student',
       },
@@ -52,7 +80,9 @@ const Users: CollectionConfig = {
     {
       name: 'points',
       type: 'number',
+      defaultValue:0,
       required: false,
+      min:0,
       admin: {
         condition: ({ type }) => type === 'student',
       },
@@ -61,19 +91,17 @@ const Users: CollectionConfig = {
       name: 'level',
       type: 'number',
       required: false,
+      defaultValue:1,
+      min:1,
       admin: {
         condition: ({ type }) => type === 'student',
       },
     },
     {
       name: 'badges',
-      type: 'array',
-      fields: [
-        {
-          name: 'badge_id',
-          type: 'text',
-        },
-      ],
+      type: 'relationship',
+      relationTo:'badges',
+      hasMany:true,
       required: false,
       admin: {
         condition: ({ type }) => type === 'student',
@@ -139,21 +167,52 @@ const Users: CollectionConfig = {
       },
     },
   ],
-  access: {
-    create: async ({ req }) => {
-      console.log("Incoming create request body:", req.body); // Log the request body
-      console.log("Authenticated user:", req.user); // Log the authenticated user
-      if (req.user && req.user.type === 'admin') {
-        return true; // Allow admin to create users of any type
+
+  hooks: {
+    beforeChange: [
+      async ({ data, req }) => {
+        if (req.files && req.files["image_file"]) {
+          try {
+            const file = req.files["image_file"];
+            const maxFileSizeInBytes = 2 * 1024 * 1024; // 2MB in bytes
+            if (file.size > maxFileSizeInBytes) {
+              throw new Error('File size exceeds 2MB limit.');
+            }
+            const uploadsDir = path.join(__dirname, 'uploads');
+            if (!fs.existsSync(uploadsDir)){
+                fs.mkdirSync(uploadsDir, { recursive: true });
+            }
+            if (data.image_url) {
+              const publicId = data.image_url.split('/').slice(-2).join('/').replace(/\.(jpg|png|jpeg)$/, '');
+              await cloudinary.uploader.destroy(publicId, { invalidate: true });
+            }
+            const tempFilePath = path.join(uploadsDir, file.name);
+            await file.mv(tempFilePath);
+            const result = await cloudinary.uploader.upload(tempFilePath, {
+              folder: 'users',
+            });
+            data.image_url = result.secure_url;
+            fs.unlinkSync(tempFilePath);
+          } catch (error) {
+            throw new Error('Image upload failed.');
+          }
+        }
+        return data;
+      },
+    ],
+    afterDelete:[
+      async({req,id,doc})=>{
+       try {
+        console.log(doc);
+        if (doc.image_url) {
+          const publicId = doc.image_url.split('/').slice(-2).join('/').replace(/\.(jpg|png|jpeg)$/, '');
+          await cloudinary.uploader.destroy(publicId, { invalidate: true });
+        }
+       } catch (error) {
+        throw new Error("image is not deleted");
+       }
       }
-      if (req.body && req.body.type) {
-        req.body.type = 'student'; // Enforce student type for non-admin users
-      }
-      return true;
-    },
-    read: isAdminOrSelf,
-    update: isAdminOrSelf,
-    delete: isAdmin,
+    ]
   },
 };
 

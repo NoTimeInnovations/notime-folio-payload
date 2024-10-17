@@ -12,8 +12,7 @@ const Reviews:CollectionConfig = {
       update:isAdmin,
       delete: async ({ req, id }) => {
         if (!id) {
-          // allow the admin UI to show controls to delete since it is indeterminate without the id
-          return true
+          return false;
         }
         const review = await payload.findByID({ collection: 'reviews', id });
         return req.user.type === 'admin' || review.user_id === req.user.id;

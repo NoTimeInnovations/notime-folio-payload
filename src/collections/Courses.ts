@@ -24,6 +24,12 @@ const Courses:CollectionConfig = {
       defaultValue: 0,
     },
     {
+      name:'image',
+      type:'upload',
+      relationTo:"media",
+      required:true,
+    },
+    {
       name: 'pre_requirements',
       type: 'array',
       fields: [

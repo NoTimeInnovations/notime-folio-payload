@@ -8,7 +8,6 @@ const ProblemSubmission:CollectionConfig = {
     useAsTitle: 'problem_name',
   },
   access:{
-    // read : isAdminMentorOrSelf
     create:isAdminOrSelf,
   },
   fields: [
@@ -21,6 +20,12 @@ const ProblemSubmission:CollectionConfig = {
         update:isAdminFieldLevel,
       },
       relationTo: 'users',
+      required: true,
+    },
+    {
+      name: 'course',
+      type: 'relationship',
+      relationTo: 'courses',
       required: true,
     },
     {

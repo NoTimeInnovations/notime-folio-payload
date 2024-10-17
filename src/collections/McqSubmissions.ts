@@ -3,7 +3,6 @@ import { CollectionConfig } from 'payload/types';
 const McqSubmission:CollectionConfig = {
   slug: 'mcq-submissions',
   access:{
-    //read: isAdminMentorOrSelf,
     create:isAdminOrSelf,
   },
   fields: [
@@ -12,6 +11,12 @@ const McqSubmission:CollectionConfig = {
       defaultValue: ({ user }) => `${user.id}`,
       type: 'relationship',
       relationTo: 'users',
+      required: true,
+    },
+    {
+      name: 'course_id',
+      type: 'relationship',
+      relationTo: 'courses',
       required: true,
     },
     {
