@@ -1,4 +1,4 @@
-import { isAdminOrMentor } from '../access/isCombination'
+import { isAdminOrMentor, isAdminOrMentorFieldLevel } from '../access/isCombination'
 import { CollectionConfig } from 'payload'
 
 const Tasks: CollectionConfig = {
@@ -43,8 +43,9 @@ const Tasks: CollectionConfig = {
           },
         },
         {
-          name: 'image_url',
-          type: 'text',
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
         },
         {
           name: 'point',
