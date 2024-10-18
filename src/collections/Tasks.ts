@@ -87,8 +87,9 @@ const Tasks: CollectionConfig = {
           type: 'text',
         },
         {
-          name: 'image_url',
-          type: 'text',
+          name: 'image',
+          type: 'upload',
+          relationTo: 'media',
         },
         {
           name: 'point',
