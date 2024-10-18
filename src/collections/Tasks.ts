@@ -14,6 +14,12 @@ const Tasks: CollectionConfig = {
       name: 'title',
       type: 'text',
       defaultValue: 'Task',
+      required: true,
+    },
+    {
+      name: 'description',
+      type: 'text',
+      required: true,
     },
     {
       name: 'problems',
@@ -33,6 +39,11 @@ const Tasks: CollectionConfig = {
             },
           ],
           defaultValue: 'pending',
+        },
+        {
+          name: 'title',
+          type: 'text',
+          required: true,
         },
         {
           name: 'question',
