@@ -11,21 +11,6 @@ const Tasks: CollectionConfig = {
   },
   fields: [
     {
-      name: 'status',
-      type: 'select',
-      options: [
-        {
-          label: 'Completed',
-          value: 'completed',
-        },
-        {
-          label: 'Pending',
-          value: 'pending',
-        },
-      ],
-      defaultValue: 'pending',
-    },
-    {
       name: 'title',
       type: 'text',
       defaultValue: 'Task',
@@ -34,6 +19,21 @@ const Tasks: CollectionConfig = {
       name: 'Problems',
       type: 'array',
       fields: [
+        {
+          name: 'status',
+          type: 'select',
+          options: [
+            {
+              label: 'Completed',
+              value: 'completed',
+            },
+            {
+              label: 'Pending',
+              value: 'pending',
+            },
+          ],
+          defaultValue: 'pending',
+        },
         {
           name: 'question',
           type: 'richText',
