@@ -35,7 +35,7 @@ const Topic: CollectionConfig = {
       hasMany: true,
     },
     {
-      name: 'tasks',
+      name: 'task',
       type: 'relationship',
       relationTo: 'tasks',
     },

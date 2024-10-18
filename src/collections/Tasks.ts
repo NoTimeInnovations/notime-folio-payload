@@ -16,7 +16,7 @@ const Tasks: CollectionConfig = {
       defaultValue: 'Task',
     },
     {
-      name: 'Problems',
+      name: 'problems',
       type: 'array',
       fields: [
         {
@@ -54,7 +54,7 @@ const Tasks: CollectionConfig = {
       ],
     },
     {
-      name: 'MCQs',
+      name: 'mcqs',
       type: 'array',
       fields: [
         {
