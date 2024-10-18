@@ -4,7 +4,9 @@ import { CollectionConfig } from 'payload'
 
 const Users: CollectionConfig = {
   slug: 'users',
-  auth: true,
+  auth: {
+    tokenExpiration: 3600 * 24 * 30, // 30 days
+  },
   fields: [
     {
       name: 'image',
