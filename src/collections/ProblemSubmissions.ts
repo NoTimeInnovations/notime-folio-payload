@@ -1,36 +1,38 @@
-import {isAdminFieldLevel } from '../access/isAdmin';
-import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf';
-import { isAdminOrMentorFieldLevel } from '../access/isCombination';
-import { CollectionConfig } from 'payload';
-const ProblemSubmission:CollectionConfig = {
+import { isAdmin, isAdminFieldLevel } from '../access/isAdmin'
+import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf'
+import { isAdminOrMentorFieldLevel, isAdminOrStudent } from '../access/isCombination'
+import { CollectionConfig } from 'payload'
+const ProblemSubmission: CollectionConfig = {
   slug: 'problem-submissions',
   admin: {
     useAsTitle: 'problem_name',
   },
-  access:{
-    // read : isAdminMentorOrSelf
-    create:isAdminOrSelf,
+  access: {
+    read: () => true,
+    update: isAdminOrSelf,
+    delete: isAdmin,
+    create: isAdminOrStudent,
   },
   fields: [
     {
       name: 'user_id',
       type: 'relationship',
-      defaultValue: ({ user } : { user : any }) => `${user.id}`,
-      access:{
-        create:isAdminFieldLevel,
-        update:isAdminFieldLevel,
+      defaultValue: ({ user }: { user: any }) => `${user.id}`,
+      access: {
+        create: isAdminFieldLevel,
+        update: isAdminFieldLevel,
       },
       relationTo: 'users',
       required: true,
     },
     {
       name: 'problem_id',
-      type:'text',
+      type: 'text',
       required: true,
     },
     {
       name: 'problem_name',
-      type:'text',
+      type: 'text',
       required: true,
     },
     {
@@ -55,10 +57,10 @@ const ProblemSubmission:CollectionConfig = {
     {
       name: 'status',
       type: 'select',
-      defaultValue: "submitted",
-      access:{
-        create:isAdminOrSelfFieldAccess,
-        update:isAdminOrMentorFieldLevel,
+      defaultValue: 'submitted',
+      access: {
+        create: isAdminOrSelfFieldAccess,
+        update: isAdminOrMentorFieldLevel,
       },
       options: [
         {
@@ -77,6 +79,6 @@ const ProblemSubmission:CollectionConfig = {
       required: true,
     },
   ],
-};
+}
 
-export default ProblemSubmission;
+export default ProblemSubmission

@@ -1,10 +1,14 @@
+import { isAdmin } from '@/access/isAdmin'
 import { isAdminOrSelf } from '../access/isAdminOrSelf'
 import { CollectionConfig } from 'payload'
+import { isAdminOrStudent } from '@/access/isCombination'
 const McqSubmission: CollectionConfig = {
   slug: 'mcq-submissions',
   access: {
-    //read: isAdminMentorOrSelf,
-    create: isAdminOrSelf,
+    read: ()=>true,
+    create: isAdminOrStudent,
+    update: isAdminOrSelf,
+    delete: isAdmin,
   },
   fields: [
     {
