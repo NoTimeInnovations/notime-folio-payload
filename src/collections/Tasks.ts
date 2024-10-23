@@ -84,7 +84,8 @@ const Tasks: CollectionConfig = {
         },
         {
           name: 'answer',
-          type: 'text',
+          label : 'Answer Index',
+          type: 'number',
         },
         {
           name: 'image',
