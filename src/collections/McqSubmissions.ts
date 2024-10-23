@@ -1,15 +1,15 @@
-import { isAdminOrSelf } from '../access/isAdminOrSelf';
-import { CollectionConfig } from 'payload';
-const McqSubmission:CollectionConfig = {
+import { isAdminOrSelf } from '../access/isAdminOrSelf'
+import { CollectionConfig } from 'payload'
+const McqSubmission: CollectionConfig = {
   slug: 'mcq-submissions',
-  access:{
+  access: {
     //read: isAdminMentorOrSelf,
-    create:isAdminOrSelf,
+    create: isAdminOrSelf,
   },
   fields: [
     {
       name: 'student_id',
-      defaultValue: ({ user } : { user : any }) => `${user.id}`,
+      defaultValue: ({ user }: { user: any }) => `${user.id}`,
       type: 'relationship',
       relationTo: 'users',
       required: true,
@@ -22,10 +22,17 @@ const McqSubmission:CollectionConfig = {
     },
     {
       name: 'option_selected',
-      type: 'text'
+      type: 'array',
+      required: true,
+      fields: [
+        {
+          name: 'option_no',
+          type: 'number',
+          required: true,
+        }
+      ]
     },
   ],
+}
 
-};
-
-export default McqSubmission;
+export default McqSubmission
