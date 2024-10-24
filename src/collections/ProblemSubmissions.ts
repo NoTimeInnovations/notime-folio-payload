@@ -50,10 +50,10 @@ const ProblemSubmission: CollectionConfig = {
       name: 'live_link',
       type: 'text',
     },
-    {
-      name: 'description',
-      type: 'textarea',
-    },
+    // {
+    //   name: 'description',
+    //   type: 'textarea',
+    // },
     {
       name: 'status',
       type: 'select',
