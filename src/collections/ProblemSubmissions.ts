@@ -60,7 +60,7 @@ const ProblemSubmission: CollectionConfig = {
       defaultValue: 'submitted',
       access: {
         create: isAdminOrSelfFieldAccess,
-        update: isAdminOrMentorFieldLevel,
+        update: () => true,
       },
       options: [
         {
