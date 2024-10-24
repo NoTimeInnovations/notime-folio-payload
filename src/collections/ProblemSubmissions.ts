@@ -9,7 +9,7 @@ const ProblemSubmission: CollectionConfig = {
   },
   access: {
     read: () => true,
-    update: isAdminOrSelf,
+    update: () => true,
     delete: isAdmin,
     create: isAdminOrStudent,
   },
