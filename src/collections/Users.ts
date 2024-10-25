@@ -144,8 +144,8 @@ const Users: CollectionConfig = {
       },
       access: {
         read: () => true,
-        update: () => true,
-        create: () => true,
+        update: isAdminOrSelfFieldAccess,
+        create: isAdminOrSelfFieldAccess,
       },
       fields: [
         {
