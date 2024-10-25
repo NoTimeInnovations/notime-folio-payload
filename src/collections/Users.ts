@@ -156,11 +156,13 @@ const Users: CollectionConfig = {
         {
           name: 'roadmap_id',
           type: 'text',
+          hasMany: true,
           required: true,
         },
         {
           name: 'topic_id',
           type: 'text',
+          hasMany: true,
           required: true,
         },
       ],
