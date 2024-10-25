@@ -7,6 +7,20 @@ const Users: CollectionConfig = {
   auth: {
     tokenExpiration: 3600 * 24 * 30, // 30 days
   },
+  access: {
+    create: async ({ req }: { req: any }) => {
+      if (req.user && req.user.type === 'admin') {
+        return true
+      }
+      if (req.body && req.body.type) {
+        req.body.type = 'student'
+      }
+      return true
+    },
+    read: () => true,
+    update: isAdminOrSelf,
+    delete: isAdmin,
+  },
   fields: [
     {
       name: 'image',
@@ -123,6 +137,35 @@ const Users: CollectionConfig = {
       },
     },
     {
+      name: 'courses_unlocked',
+      type: 'array',
+      admin: {
+        condition: ({ type }) => type === 'student',
+      },
+      access: {
+        read: () => true,
+        update: () => true,
+        create: () => true,
+      },
+      fields: [
+        {
+          name: 'course_id',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'roadmap_id',
+          type: 'text',
+          required: true,
+        },
+        {
+          name: 'topic_id',
+          type: 'text',
+          required: true,
+        },
+      ],
+    },
+    {
       name: 'github',
       type: 'text',
       required: false,
@@ -139,22 +182,6 @@ const Users: CollectionConfig = {
       },
     },
   ],
-  access: {
-    create: async ({ req }: { req: any }) => {
-      console.log('Incoming create request body:', req.body)
-      console.log('Authenticated user:', req.user)
-      if (req.user && req.user.type === 'admin') {
-        return true
-      }
-      if (req.body && req.body.type) {
-        req.body.type = 'student'
-      }
-      return true
-    },
-    read: () => true,
-    update: isAdminOrSelf,
-    delete: isAdmin,
-  },
 }
 
 export default Users
