@@ -129,15 +129,6 @@ const Users: CollectionConfig = {
     },
     {
       name: 'courses',
-      type: 'relationship',
-      relationTo: 'courses',
-      hasMany: true,
-      admin: {
-        condition: ({ type }) => type === 'student',
-      },
-    },
-    {
-      name: 'courses_unlocked',
       type: 'array',
       admin: {
         condition: ({ type }) => type === 'student',
@@ -149,9 +140,10 @@ const Users: CollectionConfig = {
       },
       fields: [
         {
-          name: 'course_id',
-          type: 'text',
+          name: 'course',
+          type: 'relationship',
           required: true,
+          relationTo: 'courses',
         },
         {
           name: 'roadmap_id',
