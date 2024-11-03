@@ -7,6 +7,9 @@ const Courses:CollectionConfig = {
     update:isAdmin,
     delete:isAdmin
   },
+  admin:{
+    useAsTitle:"title",
+  },
   fields: [
     {
       name: 'title',

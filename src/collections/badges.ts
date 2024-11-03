@@ -14,9 +14,10 @@ const Badges:CollectionConfig = {
         required: true,
       },
       {
-        name: 'image_url',
-        type: 'text',
-        required: true,
+        name: 'image',
+        type:'relationship',
+        relationTo:"media",
+        required:true,
       },
       {
         name: 'decription',

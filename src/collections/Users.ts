@@ -1,6 +1,5 @@
 import { isAdmin, isAdminFieldLevel } from '../access/isAdmin';
 import { isAdminOrSelf } from '../access/isAdminOrSelf';
-import payload from 'payload';
 import { CollectionConfig } from 'payload/types';
 import { v2 as cloudinary } from 'cloudinary';
 import path from 'path';
@@ -16,6 +15,9 @@ cloudinary.config({
 const Users: CollectionConfig = {
   slug: 'users',
   auth: true,
+  admin:{
+    useAsTitle:'email'
+  },
   access: {
     create: async ({ req }) => {
       if (req.user && req.user.type === 'admin') {
@@ -26,6 +28,7 @@ const Users: CollectionConfig = {
       }
       return true;
     },
+    read:isAdminOrSelf,
     update: isAdminOrSelf,
     delete: isAdmin,
   },
@@ -47,8 +50,9 @@ const Users: CollectionConfig = {
       name: 'type',
       type: 'select',
       required: true,
-      access: {
-        update: isAdminFieldLevel,
+      access:{
+        update:isAdminFieldLevel,
+        create:isAdminFieldLevel,
       },
       options: [
         {
@@ -61,7 +65,7 @@ const Users: CollectionConfig = {
         },
         {
           label: 'Admin',
-          value: 'admin',
+          value: 'admin',  
         },
       ],
       defaultValue: 'student',
@@ -75,6 +79,9 @@ const Users: CollectionConfig = {
       max:5,
       admin: {
         condition: ({ type }) => type === 'student',
+      },access:{
+        update:isAdminFieldLevel,
+        create:isAdminFieldLevel,
       },
     },
     {
@@ -85,6 +92,9 @@ const Users: CollectionConfig = {
       min:0,
       admin: {
         condition: ({ type }) => type === 'student',
+      },access:{
+        update:isAdminFieldLevel,
+        create:isAdminFieldLevel,
       },
     },
     {
@@ -95,6 +105,9 @@ const Users: CollectionConfig = {
       min:1,
       admin: {
         condition: ({ type }) => type === 'student',
+      },access:{
+        update:isAdminFieldLevel,
+        create:isAdminFieldLevel,
       },
     },
     {
@@ -137,9 +150,22 @@ const Users: CollectionConfig = {
       type: 'relationship',
       relationTo: 'courses',
       hasMany: true,
+      access:{
+        update:isAdminFieldLevel,
+        create:isAdminFieldLevel,
+      },
       admin: {
         condition: ({ type }) => type === 'student',
       },
+    },
+    {
+      name: 'transactions',
+      type:'relationship',
+      relationTo:'transactions',
+      admin: {
+        condition: ({ type }) => type === 'student',
+      },
+      hasMany:true,
     },
     {
       name: 'github',
@@ -166,6 +192,7 @@ const Users: CollectionConfig = {
         description: 'URL of the user profile image',
       },
     },
+    
   ],
 
   hooks: {

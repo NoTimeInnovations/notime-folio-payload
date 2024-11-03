@@ -1,4 +1,4 @@
-import { CollectionConfig } from 'payload/types';
+import { CollectionAfterReadHook, CollectionConfig } from 'payload/types';
 import cloudinary from 'cloudinary';
 import path from 'path';
 import fs from 'fs';
@@ -11,9 +11,6 @@ cloudinary.v2.config({
 
 const Media: CollectionConfig = {
   slug: 'media',
-  access: {
-    read: () => true,
-  },
   upload: {
     staticDir: 'media',
     mimeTypes: ['image/*'],
@@ -37,6 +34,15 @@ const Media: CollectionConfig = {
     },
   ],
   hooks: {
+    afterRead:[
+      async({doc})=>{
+        return {
+          url:doc.image_url,
+          id:doc.id,
+          type:doc.mimeType
+        };
+      }
+    ],
     beforeChange: [
         async ({ data, req }) => {
             console.log(req.files.file);

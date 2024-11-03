@@ -29,7 +29,8 @@ const Tasks:CollectionConfig = {
           },
           {
             name: 'image_url',
-            type: 'text',
+            type: 'relationship',
+            relationTo:'media'
           },
           {
             name: 'point',

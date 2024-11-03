@@ -1,8 +1,7 @@
 import payload from 'payload';
 import { isAdminFieldLevel } from '../access/isAdmin';
-import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf';
 import { CollectionConfig } from 'payload/types';
-import { isAdminOrStudent } from '@/access/isCombination';
+
 const Comments:CollectionConfig = {
     slug: 'comments',
     access:{
@@ -49,38 +48,49 @@ const Comments:CollectionConfig = {
         required: true,
       },
     ],
-    endpoints: [
-      {
-          path: '/comments/:id',
+    endpoints: [      
+      {   // for posting the comment
+          path: '/:content_id',
           method: 'post',
           handler: async (req, res) => {
-            const { id } = req.params;
+            const { content_id } = req.params;
             const { user, body } = req;
+            if(!user){
+              return res.json({
+                message:"unauthroized",
+                sucess:'false'
+              })
+            }
+            console.log({ user, body });
             try {
               const newComment = await payload.create({
                 collection: 'comments',
                 data: {
-                  student_id: user.id,
-                  student_name: user.name,
+                  user_id: user.id,
+                  user_name:user.name,
                   content: body.content,
                 },
+                depth:0
               });
+              console.log("new Commnet :",newComment);
               const content = await payload.findByID({
                 collection: 'contents',
-                id,
+                id:content_id,
+                depth:0
               });
-        
+              console.log("Content :",content);
               if (!content) {
                 return res.status(404).json({ message: 'Content not found' });
               }
-              const updatedContent = await payload.update({
+              await payload.update({
                 collection: 'contents',
-                id,
+                id:content_id,
                 data: {
-                  comments: [ ...(content.comments as string[] || []), newComment.id],
+                  comments: [...(content.comments as string[]), newComment.id],
                 },
+                depth:0
               });
-              return res.status(200).json({ content: updatedContent });
+              return res.status(200).json({ newComment });
             } catch (error) {
               console.error('Error adding comment:', error);
               return res.status(500).json({ message: 'Error adding comment' });

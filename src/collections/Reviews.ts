@@ -53,36 +53,50 @@ const Reviews:CollectionConfig = {
     ],
     endpoints: [
       {
-          path: '/reviews/:id',
+          path: '/:id',
           method: 'post',
           handler: async (req, res) => {
             const { id } = req.params;
             const { user, body } = req;
-            
             try {
-              if(!user) throw Error("unAuthorized");
-              const newComment = await payload.create({
+              console.log(user);
+              if(!user||!user.courses.some(course => course.id ==id)) {
+                return res.status(500).json({
+                  "message": "user unauthorized",
+                  "success":false,
+                });
+              };
+              const newReview = await payload.create({
                 collection: 'reviews',
                 data: {
-                  content: body.content,
+                  description: body.description,
+                  rating:body.rating,
+                  user_name:user.name,
+                  user_id:user.id
                 },
+                depth:0
               });
-              const content = await payload.findByID({
+              
+              console.log(newReview);
+              const courses = await payload.findByID({
                 collection: 'courses',
                 id,
+                depth:0
               });
         
-              if (!content) {
-                return res.status(404).json({ message: 'Content not found' });
+              if (!courses) {
+                return res.status(404).json({ message: 'courses not found' });
               }
-              const updatedContent = await payload.update({
-                collection: 'contents',
+              console.log(courses);
+              await payload.update({
+                collection: 'courses',
                 id,
                 data: {
-                  reviews: [ ...(content.reviews as string[] || []), newComment.id],
+                  reviews: [ ...(courses.reviews as string[] || []), newReview.id],
                 },
+                depth:0
               });
-              return res.status(200).json({ review: updatedContent });
+              return res.status(200).json({  newReview });
             } catch (error) {
               console.error('Error adding review:', error);
               return res.status(500).json({ message: 'Error adding review' });

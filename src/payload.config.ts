@@ -6,15 +6,15 @@ import { slateEditor } from '@payloadcms/richtext-slate';
 import { buildConfig } from 'payload/config';
 
 import Users from './collections/Users';
-import ProblemSubmissions from './collections/ProblemSubmissions';
 import Courses from './collections/Courses';
 import Tasks from './collections/Tasks';
 import Comments from './collections/Comments';
 import Content from './collections/Content';
 import Reviews from './collections/Reviews';
-import McqSubmission from './collections/McqSubmissions';
+import Submission from './collections/Submission';
 import Badges from './collections/badges';
 import Media from './collections/Media';
+import Transaction from './collections/Transaction';
 
 export default buildConfig({
   admin: {
@@ -40,7 +40,7 @@ export default buildConfig({
     },
   },
   editor: slateEditor({}),
-  collections: [Users, McqSubmission, ProblemSubmissions, Courses, Tasks, Comments, Content, Reviews, Badges,Media],
+  collections: [Users,Transaction, Submission, Courses, Tasks, Comments, Content, Reviews, Badges,Media],
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
