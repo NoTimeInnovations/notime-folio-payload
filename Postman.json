@@ -1,0 +1,451 @@
+{
+	"info": {
+		"_postman_id": "f53f6442-1d10-42df-94ba-08f47c96d52a",
+		"name": "Notime Payload",
+		"description": "Instructions for use\n\n- send all the request for user maupulation and submissions through client componet as the login request returns auth cookies.\n    \n- send all the request to read the courses ,reviews, comments and related through server componet and cache the data in the next server itself.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31092440"
+	},
+	"item": [
+		{
+			"name": "USER",
+			"item": [
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "email",
+									"value": "john.doe2@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"login"
+							]
+						},
+						"description": "returns cookies with expiration"
+					},
+					"response": []
+				},
+				{
+					"name": "register user",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image_file",
+									"type": "file",
+									"src": "/C:/Users/ASUS/Downloads/backgroundimage.jpg"
+								},
+								{
+									"key": "name",
+									"value": "John2",
+									"type": "text"
+								},
+								{
+									"key": "email",
+									"value": "john.doe2@example.com",
+									"type": "text"
+								},
+								{
+									"key": "password",
+									"value": "1234",
+									"type": "text"
+								},
+								{
+									"key": "linkedin",
+									"value": "",
+									"type": "text"
+								},
+								{
+									"key": "github",
+									"value": "",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update",
+					"request": {
+						"method": "PATCH",
+						"header": [],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "image_file",
+									"type": "file",
+									"src": "/C:/Users/ASUS/Downloads/backgroundimage.jpg"
+								},
+								{
+									"key": "password",
+									"value": "123",
+									"type": "text"
+								},
+								{
+									"key": "linkedin",
+									"value": "test_linkdin",
+									"type": "text"
+								},
+								{
+									"key": "github",
+									"value": "test_github",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://localhost:3000/api/users/6717ff48950a16ff4e7f0a83",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"6717ff48950a16ff4e7f0a83"
+							]
+						},
+						"description": "requires auth"
+					},
+					"response": []
+				},
+				{
+					"name": "me",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/users/6717ff48950a16ff4e7f0a83?locale=undefined&draft=false&depth=0",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"users",
+								"6717ff48950a16ff4e7f0a83"
+							],
+							"query": [
+								{
+									"key": "locale",
+									"value": "undefined"
+								},
+								{
+									"key": "draft",
+									"value": "false"
+								},
+								{
+									"key": "depth",
+									"value": "0",
+									"description": "increasing depth populates/gets the related data"
+								}
+							]
+						},
+						"description": "requires auth"
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Courses",
+			"item": [
+				{
+					"name": "Read all",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/courses?locale=undefined&draft=true&depth=1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"courses"
+							],
+							"query": [
+								{
+									"key": "locale",
+									"value": "undefined"
+								},
+								{
+									"key": "draft",
+									"value": "true"
+								},
+								{
+									"key": "depth",
+									"value": "1"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "read one",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:3000/api/courses?locale=undefined&draft=true&depth=3",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "3000",
+							"path": [
+								"api",
+								"courses"
+							],
+							"query": [
+								{
+									"key": "locale",
+									"value": "undefined"
+								},
+								{
+									"key": "draft",
+									"value": "true"
+								},
+								{
+									"key": "depth",
+									"value": "3"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "comment on content",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "content",
+							"value": "new comment by user",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/comments/:content_id",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"comments",
+						":content_id"
+					],
+					"variable": [
+						{
+							"key": "content_id",
+							"value": ""
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "reviews on courses",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "description",
+							"value": "test_review",
+							"type": "text"
+						},
+						{
+							"key": "rating",
+							"value": "5",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/reviews/671055dc653a02468f18a6cc",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"reviews",
+						"671055dc653a02468f18a6cc"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "task Submission",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "task",
+							"value": "6721e7741d2ba3f0130bd6c7",
+							"type": "text"
+						},
+						{
+							"key": "problem[answer]",
+							"value": "asdgawsdgas dsaga sdgasdgasdgasdgasdgasdg",
+							"type": "text"
+						},
+						{
+							"key": "problem[github_link]",
+							"value": "https://github.com/user/repo",
+							"type": "text"
+						},
+						{
+							"key": "problem[live_link]",
+							"value": "https://live-link.com",
+							"type": "text"
+						},
+						{
+							"key": "problem[imageUrl]",
+							"type": "file",
+							"src": "/C:/Users/ASUS/Downloads/backgroundimage.jpg"
+						},
+						{
+							"key": "mcq[selectedOption]",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/submissions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"submissions"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "read submission",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "task",
+							"value": "6721e7741d2ba3f0130bd6c7",
+							"type": "text"
+						},
+						{
+							"key": "problem[answer]",
+							"value": "asdgawsdgas dsaga sdgasdgasdgasdgasdgasdg",
+							"type": "text"
+						},
+						{
+							"key": "problem[github_link]",
+							"value": "https://github.com/user/repo",
+							"type": "text"
+						},
+						{
+							"key": "problem[live_link]",
+							"value": "https://live-link.com",
+							"type": "text"
+						},
+						{
+							"key": "problem[imageUrl]",
+							"type": "file",
+							"src": "/C:/Users/ASUS/Downloads/backgroundimage.jpg"
+						},
+						{
+							"key": "mcq[selectedOption]",
+							"value": "1234",
+							"type": "text"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:3000/api/submissions",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "3000",
+					"path": [
+						"api",
+						"submissions"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
