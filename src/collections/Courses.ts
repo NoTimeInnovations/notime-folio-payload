@@ -1,19 +1,23 @@
-import { isAdmin } from '../access/isAdmin';
-import { CollectionConfig } from 'payload';
-const Courses:CollectionConfig = {
+import { isAdminOrStudent } from '@/access/isCombination'
+import { isAdmin } from '../access/isAdmin'
+import { CollectionConfig } from 'payload'
+const Courses: CollectionConfig = {
   slug: 'courses',
-  access:{
-    read : ()=>true,
-    create:isAdmin,
-    update:isAdmin,
-    delete:isAdmin
+  access: {
+    read: isAdminOrStudent,
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin,
+  },
+  admin: {
+    useAsTitle: 'title',
   },
   fields: [
     {
-      name : 'image',
-      type : 'upload',
-      required : true,
-      relationTo : 'media'
+      name: 'image',
+      type: 'upload',
+      required: true,
+      relationTo: 'media',
     },
     {
       name: 'title',
@@ -68,6 +72,6 @@ const Courses:CollectionConfig = {
       hasMany: true,
     },
   ],
-};
+}
 
-export default Courses;
+export default Courses

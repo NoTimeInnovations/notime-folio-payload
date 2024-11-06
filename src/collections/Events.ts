@@ -1,7 +1,15 @@
+import { isAdmin } from "@/access/isAdmin";
+import { isAdminOrStudent } from "@/access/isCombination";
 import { CollectionConfig } from "payload";
 
 export const Events: CollectionConfig = {
   slug: 'events',
+  access : {
+    read: isAdminOrStudent,
+    create: isAdmin,
+    update: isAdmin,
+    delete: isAdmin
+  },
   fields: [
     {
       name: 'image',

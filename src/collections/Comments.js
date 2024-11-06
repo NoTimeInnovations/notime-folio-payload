@@ -2,9 +2,12 @@ import payload, { PayloadHandler } from 'payload';
 import { isAdminFieldLevel } from '../access/isAdmin';
 import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf';
 import { CollectionConfig } from 'payload';
+import { read } from 'fs';
+import { isAdminOrStudent } from '@/access/isCombination';
 const Comments = {
     slug: 'comments',
     access:{
+      read : isAdminOrStudent,
       create:isAdminOrSelf,
       update:async ({ req, id }) => {
         if (!id) {

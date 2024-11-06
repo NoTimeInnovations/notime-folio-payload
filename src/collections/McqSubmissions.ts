@@ -1,7 +1,8 @@
 import { isAdmin } from '@/access/isAdmin';
-import { isAdminOrSelf } from '../access/isAdminOrSelf';
+import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf';
 import { CollectionConfig } from 'payload';
-import { isAdminOrStudent } from '@/access/isCombination';
+import { isAdminOrStudent, isAdminOrStudentFieldLevel } from '@/access/isCombination';
+
 
 const McqSubmission: CollectionConfig = {
   slug: 'mcq-submissions',

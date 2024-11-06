@@ -1,3 +1,4 @@
+import { isAdminOrStudent, isMentorOrStudent } from '@/access/isCombination'
 import { isAdmin, isAdminFieldLevel } from '../access/isAdmin'
 import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf'
 import { CollectionConfig } from 'payload'
@@ -8,20 +9,38 @@ const Users: CollectionConfig = {
     tokenExpiration: 3600 * 24 * 30, // 30 days
   },
   access: {
-    create: async ({ req }: { req: any }) => {
-      if (req.user && req.user.type === 'admin') {
-        return true
-      }
-      if (req.body && req.body.type) {
-        req.body.type = 'student'
-      }
-      return true
-    },
+    create: () => true,
     read: () => true,
     update: isAdminOrSelf,
     delete: isAdmin,
   },
+  admin: {
+    useAsTitle: 'displayName',
+    hidden: ({ user }) => {
+      const userType = user?.type;  
+      return userType === 'student' || userType === 'mentor';
+    },
+  },
   fields: [
+    {
+      name: 'displayName',
+      type: 'text',
+      hooks: {
+        beforeChange: [
+          ({ data }) => {
+            if (data?.name && data?.email) {
+              const newDisplayName = `${data.name} - ${data.email} - ${data.type}`
+              return newDisplayName
+            }
+            return ''
+          },
+        ],
+      },
+      access: {
+        update: isAdminFieldLevel,
+        create: isAdminFieldLevel,
+      },
+    },
     {
       name: 'image',
       type: 'upload',
@@ -173,7 +192,21 @@ const Users: CollectionConfig = {
         condition: ({ type }) => type === 'student',
       },
     },
+    {
+      name: 'mentor',
+      type: 'relationship',
+      relationTo: 'users',
+      hasMany: false,
+      admin: {
+        condition: ({ type }) => type === 'student', // Only show this field for students
+      },
+      access: {
+        read: isAdminFieldLevel,
+        update: isAdminFieldLevel,
+        create: isAdminFieldLevel,
+      }
+    },
   ],
 }
 
-export default Users
+export default Users;

@@ -1,12 +1,13 @@
+import { isAdmin } from '@/access/isAdmin';
 import { isAdminOrMentor } from '../access/isCombination';
 import { CollectionConfig } from 'payload';
 const Roadmap:CollectionConfig = {
     slug: 'roadmaps',
     access:{
       read : ()=>true,
-      create:isAdminOrMentor,
-      delete:isAdminOrMentor,
-      update:isAdminOrMentor
+      create:isAdmin,
+      delete:isAdmin,
+      update:isAdmin
     },
     fields: [
       {

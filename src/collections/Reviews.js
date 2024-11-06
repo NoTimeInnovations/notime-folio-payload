@@ -7,7 +7,7 @@ import { CollectionConfig } from 'payload'
 const Reviews = {
   slug: 'reviews',
   access: {
-    read: () => true,
+    read: isAdminOrStudent,
     update: isAdmin,
     delete: async ({ req, id }) => {
       if (!id) {
