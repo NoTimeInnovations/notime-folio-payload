@@ -3,11 +3,10 @@ import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf
 import { CollectionConfig } from 'payload';
 import { isAdminOrStudent, isAdminOrStudentFieldLevel } from '@/access/isCombination';
 
-
 const McqSubmission: CollectionConfig = {
   slug: 'mcq-submissions',
   access: {
-    read: () => true,
+    read: ()=>true,
     create: isAdminOrStudent,
     update: isAdminOrSelf,
     delete: isAdmin,

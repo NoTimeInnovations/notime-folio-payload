@@ -193,12 +193,12 @@ const Users: CollectionConfig = {
       },
     },
     {
-      name: 'mentor',
+      name: 'students',
       type: 'relationship',
       relationTo: 'users',
-      hasMany: false,
+      hasMany: true,
       admin: {
-        condition: ({ type }) => type === 'student', // Only show this field for students
+        condition: ({ type }) => type === 'mentor', // Only show this field for mentor
       },
       access: {
         read: isAdminFieldLevel,
