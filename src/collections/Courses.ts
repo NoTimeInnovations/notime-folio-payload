@@ -20,6 +20,11 @@ const Courses: CollectionConfig = {
       relationTo: 'media',
     },
     {
+      name: 'courseLevel',
+      type: 'number',
+      required: true,
+    },
+    {
       name: 'title',
       type: 'text',
       required: true,

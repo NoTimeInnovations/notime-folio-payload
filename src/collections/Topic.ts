@@ -18,10 +18,19 @@ const Topic: CollectionConfig = {
     {
       name: 'shortDesc',
       type: 'textarea',
+      required: true,
     },
     {
       name: 'video',
       type: 'text',
+      required: true,
+    },
+    {
+      name :'videoThumbnail',
+      type : 'upload',
+      relationTo : 'media',
+      required : true,
+
     },
     {
       name: 'total_points',
