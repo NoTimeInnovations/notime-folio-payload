@@ -52,5 +52,8 @@ export default buildConfig({
       token: process.env.BLOB_READ_WRITE_TOKEN || "",
     }),
   ],
-  cors : '*'
+  serverURL: process.env.SERVER_URL || 'http://localhost:3001',
+  cors : {
+    origins : ['http://localhost:3000','https://www.notime.co.in']
+  }
 })
