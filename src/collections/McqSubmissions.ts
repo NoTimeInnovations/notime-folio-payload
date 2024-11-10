@@ -1,12 +1,12 @@
-import { isAdmin } from '@/access/isAdmin';
-import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf';
-import { CollectionConfig } from 'payload';
-import { isAdminOrStudent, isAdminOrStudentFieldLevel } from '@/access/isCombination';
+import { isAdmin } from '@/access/isAdmin'
+import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf'
+import { CollectionConfig } from 'payload'
+import { isAdminOrStudent, isAdminOrStudentFieldLevel } from '@/access/isCombination'
 
 const McqSubmission: CollectionConfig = {
   slug: 'mcq-submissions',
   access: {
-    read: ()=>true,
+    read: () => true,
     create: isAdminOrStudent,
     update: isAdminOrSelf,
     delete: isAdmin,
@@ -36,7 +36,12 @@ const McqSubmission: CollectionConfig = {
         },
       ],
     },
+    {
+      name: 'pointsScored',
+      type: 'number',
+      defaultValue: 0,
+    },
   ],
-};
+}
 
-export default McqSubmission;
+export default McqSubmission

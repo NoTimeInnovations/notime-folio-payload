@@ -25,21 +25,7 @@ const Tasks: CollectionConfig = {
       name: 'problems',
       type: 'array',
       fields: [
-        {
-          name: 'status',
-          type: 'select',
-          options: [
-            {
-              label: 'Completed',
-              value: 'completed',
-            },
-            {
-              label: 'Pending',
-              value: 'pending',
-            },
-          ],
-          defaultValue: 'pending',
-        },
+        
         {
           name: 'title',
           type: 'text',
