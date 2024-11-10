@@ -147,6 +147,14 @@ const Users: CollectionConfig = {
       },
     },
     {
+      name : 'isEnrolled',
+      type : 'checkbox',
+      defaultValue : false,
+      admin : {
+        condition : ({type}) => type === 'student',
+      }
+    },
+    {
       name: 'courses',
       type: 'array',
       admin: {
@@ -157,7 +165,9 @@ const Users: CollectionConfig = {
         update: isAdminOrSelfFieldAccess,
         create: isAdminOrSelfFieldAccess,
       },
+      
       fields: [
+       
         {
           name: 'course',
           type: 'relationship',
@@ -192,6 +202,7 @@ const Users: CollectionConfig = {
         condition: ({ type }) => type === 'student',
       },
     },
+    
     {
       name: 'students',
       type: 'relationship',
