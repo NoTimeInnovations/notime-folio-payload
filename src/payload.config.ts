@@ -52,5 +52,4 @@ export default buildConfig({
       token: process.env.BLOB_READ_WRITE_TOKEN || "",
     }),
   ],
-  cors: ['http://localhost:3000', 'https://www.notime.co.in' , '*'],
 })
