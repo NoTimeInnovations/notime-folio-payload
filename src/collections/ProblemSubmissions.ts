@@ -1,14 +1,16 @@
+import { canReadSubmission } from '@/access/canReadSubmission'
 import { isAdmin, isAdminFieldLevel } from '../access/isAdmin'
 import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf'
 import { isAdminOrMentorFieldLevel, isAdminOrStudent } from '../access/isCombination'
 import { CollectionConfig } from 'payload'
+
 const ProblemSubmission: CollectionConfig = {
   slug: 'problem-submissions',
   admin: {
     useAsTitle: 'problem_name',
   },
   access: {
-    read: () => true,
+    read: canReadSubmission,
     update: () => true,
     delete: isAdmin,
     create: isAdminOrStudent,

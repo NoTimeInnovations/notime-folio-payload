@@ -6,7 +6,7 @@ import { isAdminOrStudent, isAdminOrStudentFieldLevel } from '@/access/isCombina
 const McqSubmission: CollectionConfig = {
   slug: 'mcq-submissions',
   access: {
-    read: () => true,
+    read: isAdminOrStudent,
     create: isAdminOrStudent,
     update: isAdminOrSelf,
     delete: isAdmin,
