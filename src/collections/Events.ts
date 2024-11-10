@@ -18,6 +18,10 @@ export const Events: CollectionConfig = {
       required: true
     },
     {
+      name : 'registrationLink',
+      type : 'text'
+    },
+    {
       name: 'title',
       type: 'text',
       required: true
