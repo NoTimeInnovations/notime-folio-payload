@@ -5,7 +5,7 @@ import { CollectionConfig } from "payload";
 export const Events: CollectionConfig = {
   slug: 'events',
   access : {
-    read: isAdminOrStudent,
+    read: ()=>true,
     create: isAdmin,
     update: isAdmin,
     delete: isAdmin
