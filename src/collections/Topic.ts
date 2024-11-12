@@ -22,7 +22,8 @@ const Topic: CollectionConfig = {
     },
     {
       name: 'video',
-      type: 'text',
+      type: 'upload',
+      relationTo : 'media',
       required: true,
     },
     {
