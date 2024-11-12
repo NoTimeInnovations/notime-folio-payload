@@ -320,6 +320,7 @@ export interface ProblemSubmission {
   task_id: string | Task;
   github_link: string;
   live_link?: string | null;
+  rejected_reason?: string | null;
   status: 'submitted' | 'rejected' | 'approved';
   updatedAt: string;
   createdAt: string;
@@ -543,6 +544,7 @@ export interface ProblemSubmissionsSelect<T extends boolean = true> {
   task_id?: T;
   github_link?: T;
   live_link?: T;
+  rejected_reason?: T;
   status?: T;
   updatedAt?: T;
   createdAt?: T;

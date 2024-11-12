@@ -52,10 +52,10 @@ const ProblemSubmission: CollectionConfig = {
       name: 'live_link',
       type: 'text',
     },
-    // {
-    //   name: 'description',
-    //   type: 'textarea',
-    // },
+    {
+      name: 'rejected_reason',
+      type: 'textarea',    
+    },
     {
       name: 'status',
       type: 'select',
