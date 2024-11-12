@@ -1,3 +1,4 @@
+import { User } from '@/payload-types'
 import { Access } from 'payload'
 
 export const canReadSubmission: Access = ({ req: { user } }) => {
@@ -5,9 +6,10 @@ export const canReadSubmission: Access = ({ req: { user } }) => {
     return true
   }
 
-  // If user is a mentor, only allow access to submissions by their students
   if (user?.type === 'mentor') {
-    const studentIds = (user.students || []).map((student: { id: any }) => student.id)
+
+    const studentIds = user?.students?.filter((student): student is User => typeof student !== 'string').map((student) => student.id);
+
     return {
       user_id: {
         in: studentIds,

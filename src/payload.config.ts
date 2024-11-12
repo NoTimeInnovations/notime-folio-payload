@@ -2,13 +2,13 @@
 import { mongooseAdapter } from '@payloadcms/db-mongodb'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import path from 'path'
-import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { buildConfig, CollectionConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
-
+import Users from './collections/Users'
 import { Media } from './collections/Media'
 import { Events } from './collections/Events'
 import McqSubmission from './collections/McqSubmissions'
@@ -16,11 +16,10 @@ import ProblemSubmission from './collections/ProblemSubmissions'
 import Courses from './collections/Courses'
 import Tasks from './collections/Tasks'
 import Comments from './collections/Comments'
-import Reviews from './collections/Reviews'
-import Badges from './collections/badges'
-import Users from './collections/Users'
-import Topic from './collections/Topic'
 import Roadmap from './collections/Roadmap'
+import Reviews from './collections/Reviews'
+import Badges from './collections/Badges'
+import Topic from './collections/Topic'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -32,7 +31,20 @@ export default buildConfig({
       baseDir: path.resolve(dirname),
     },
   },
-  collections: [Users, Media, Events, McqSubmission,ProblemSubmission,Courses,Tasks,Comments as CollectionConfig,Roadmap,Reviews as CollectionConfig,Badges , Topic],
+  collections: [
+    Users,
+    Media,
+    Events,
+    McqSubmission,
+    ProblemSubmission,
+    Courses,
+    Tasks,
+    Comments as CollectionConfig,
+    Roadmap,
+    Reviews as CollectionConfig,
+    Badges,
+    Topic,
+  ],
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -68,6 +80,4 @@ export default buildConfig({
       },
     }),
   ],
-  serverURL: process.env.SERVER_URL || 'http://localhost:3001',
-  cors : '*'
 })

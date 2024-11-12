@@ -22,8 +22,7 @@ const Topic: CollectionConfig = {
     },
     {
       name: 'video',
-      type: 'upload',
-      relationTo: 'media',
+      type: 'text',
       required: true,
     },
     {
@@ -32,6 +31,11 @@ const Topic: CollectionConfig = {
       relationTo : 'media',
       required : true,
 
+    },
+    {
+      name: 'total_points',
+      type: 'number',
+      required: true,
     },
     {
       name: 'comments',

@@ -1,10 +1,8 @@
-import payload from 'payload'
-import { isAdmin, isAdminFieldLevel } from '../access/isAdmin'
-import { isAdminOrSelf, isAdminOrSelfFieldAccess } from '../access/isAdminOrSelf'
+import payload, { CollectionConfig } from 'payload'
+import { isAdmin } from '../access/isAdmin'
 import { isAdminOrStudent } from '../access/isCombination'
-import { CollectionConfig } from 'payload'
 
-const Reviews = {
+const Reviews : CollectionConfig = {
   slug: 'reviews',
   access: {
     read: isAdminOrStudent,
@@ -15,7 +13,7 @@ const Reviews = {
         return true
       }
       const review = await payload.findByID({ collection: 'reviews', id })
-      return req?.user?.type === 'admin' || review.user_id === req?.user?.id
+      return req?.user?.type === 'admin' || review.user.toString() === req?.user?.id
     },
     create: isAdminOrStudent,
   },
@@ -23,7 +21,7 @@ const Reviews = {
     {
       name: 'user',
       type: 'relationship',
-      defaultValue: (context) => context?.user?.id,
+      defaultValue: (context: { user: { id: string } }) => context?.user?.id,
       relationTo: 'users',
       required: true,
     },

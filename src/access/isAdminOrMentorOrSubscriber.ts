@@ -1,7 +1,7 @@
 import { Access } from 'payload'
 
 export const isAdminOrMentorOrSubscriber: Access = ({ req: { user }, id }) => {
-  const idStr = String(id)
+  
 
   if (user) {
     if (user.type?.includes('admin')) {
@@ -13,11 +13,12 @@ export const isAdminOrMentorOrSubscriber: Access = ({ req: { user }, id }) => {
       return true
     }
 
-    if (user?.courses?.includes(idStr)) {
+    if (id && typeof id === 'object' && user?.courses?.includes(id)) {
       console.log('self')
       return true
     }
-    return Boolean(user?.id === idStr)
+
+    return Boolean(user?.id === id)
   }
   return false
 }
