@@ -6,7 +6,7 @@ import { CollectionConfig } from 'payload'
 const Users: CollectionConfig = {
   slug: 'users',
   auth: {
-    tokenExpiration: 3600 * 24 * 30, // 30 days
+    tokenExpiration: 3600 * 24 * 30,
   },
   access: {
     create: () => true,

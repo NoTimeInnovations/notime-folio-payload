@@ -5,8 +5,6 @@ export const canReadSubmission: Access = ({ req: { user } }) => {
     return true
   }
 
-  console.log('user:', user)
-
   // If user is a mentor, only allow access to submissions by their students
   if (user?.type === 'mentor') {
     const studentIds = (user.students || []).map((student: { id: any }) => student.id)

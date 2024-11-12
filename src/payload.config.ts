@@ -6,6 +6,7 @@ import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 import { buildConfig, CollectionConfig } from 'payload'
 import { fileURLToPath } from 'url'
 import sharp from 'sharp'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 
 import { Media } from './collections/Media'
@@ -42,18 +43,31 @@ export default buildConfig({
   }),
   sharp,
   plugins: [
-    vercelBlobStorage({
-      enabled: true, // Optional, defaults to true
-      // Specify which collections should use Vercel Blob
+    // vercelBlobStorage({
+    //   enabled: true, // Optional, defaults to true
+    //   // Specify which collections should use Vercel Blob
+    //   collections: {
+    //     [Media.slug]: true
+    //   },
+    //   // Token provided by Vercel once Blob storage is added to your Vercel project
+    //   token: process.env.BLOB_READ_WRITE_TOKEN || "",
+    // }),
+    s3Storage({
+      enabled: true,
       collections: {
         [Media.slug]: true
       },
-      // Token provided by Vercel once Blob storage is added to your Vercel project
-      token: process.env.BLOB_READ_WRITE_TOKEN || "",
+      bucket: process.env.S3_BUCKET || '',
+      config: {
+        credentials: {
+          accessKeyId: process.env.S3_ACCESS_KEY_ID || '',
+          secretAccessKey: process.env.S3_SECRET_ACCESS_KEY || '',
+        },
+        region: process.env.S3_REGION,
+        // ... Other S3 configuration
+      },
     }),
   ],
   serverURL: process.env.SERVER_URL || 'http://localhost:3001',
-  cors : {
-    origins : ['http://localhost:3000','https://www.notime.co.in']
-  }
+  cors : '*'
 })
