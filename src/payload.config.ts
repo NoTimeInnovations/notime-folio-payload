@@ -80,4 +80,5 @@ export default buildConfig({
       },
     }),
   ],
+  cors : '*'
 })
