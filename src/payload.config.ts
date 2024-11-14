@@ -20,6 +20,7 @@ import Roadmap from './collections/Roadmap'
 import Reviews from './collections/Reviews'
 import Badges from './collections/Badges'
 import Topic from './collections/Topic'
+import { upload } from 'payload/shared'
 
 const filename = fileURLToPath(import.meta.url)
 const dirname = path.dirname(filename)
@@ -45,6 +46,11 @@ export default buildConfig({
     Badges,
     Topic,
   ],
+  upload : {
+    limits : {
+      fileSize: 2 * 1024 * 1024 * 1024, // 2GB limit
+    }
+  },
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || '',
   typescript: {
@@ -80,5 +86,5 @@ export default buildConfig({
       },
     }),
   ],
-  cors : '*'
+  cors: '*',
 })

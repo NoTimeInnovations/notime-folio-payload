@@ -194,7 +194,7 @@ export interface Topic {
   id: string;
   topic: string;
   shortDesc: string;
-  video: string;
+  video: string | Media;
   videoThumbnail: string | Media;
   total_points: number;
   comments?: (string | Comment)[] | null;
